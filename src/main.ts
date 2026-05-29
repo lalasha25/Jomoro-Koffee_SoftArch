@@ -1,26 +1,33 @@
 import { NestFactory } from '@nestjs/core';
-import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  app.enableCors();
-  app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));
-
   const config = new DocumentBuilder()
-    .setTitle('Product Service')
-    .setDescription('API Product Service')
+    .setTitle('Jomoro Koffee - Auth Service')
+    .setDescription('Dokumentasi API untuk Login dan Register')
     .setVersion('1.0')
-    .addBearerAuth()
+    .addBearerAuth( 
+      {
+        type: 'http',
+        scheme: 'bearer',
+        bearerFormat: 'JWT',
+        name: 'JWT',
+        description: 'Masukkan token JWT kamu di sini',
+        in: 'header',
+      },
+      'bearer', 
+    )
     .build();
-
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
 
-  await app.listen(3002);
-  console.log(`Application is running on: http://localhost:3002`);
-  console.log(`Swagger documentation is available at: http://localhost:3002/api`);
+  app.useGlobalPipes(new ValidationPipe());
+
+  app.enableCors(); 
+  await app.listen(3001); 
 }
 bootstrap();
