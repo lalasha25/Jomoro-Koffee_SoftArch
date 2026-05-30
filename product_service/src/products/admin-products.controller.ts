@@ -17,7 +17,7 @@ import { ApiTags, ApiOperation, ApiResponse, ApiParam, ApiHeader, ApiBearerAuth 
 @Roles('Admin')
 @Controller('admin/products')
 export class AdminProductsController {
-  constructor(private readonly productsService: ProductsService) {}
+  constructor(private readonly productsService: ProductsService) { }
 
   @Post()
   @ApiOperation({ summary: 'Create a new product record (Admin Only)' })

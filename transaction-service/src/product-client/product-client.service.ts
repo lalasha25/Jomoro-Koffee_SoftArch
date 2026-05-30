@@ -20,7 +20,12 @@ export class ProductClientService {
       const response = await axios.post(
         `${this.baseUrl}/admin/products/${productId}/reduce`,
         { quantity },
-        { headers: authorization ? { Authorization: authorization } : {} },
+        { 
+          headers: { 
+            'x-user-role': 'Admin',
+            ...(authorization ? { Authorization: authorization } : {})
+          } 
+        },
       );
       return response.data;
     } catch (error) {

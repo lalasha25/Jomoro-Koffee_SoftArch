@@ -7,7 +7,7 @@ import { AuthGuard } from '@nestjs/passport';
 @ApiTags('Auth')
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(private readonly authService: AuthService) { }
 
   @Post('register')
   @ApiOperation({ summary: 'Register User' })
@@ -22,7 +22,7 @@ export class AuthController {
     schema: {
       type: 'object',
       properties: {
-        email: { type: 'string', example: 'budi@gmail.com' },
+        email: { type: 'string', example: 'lilisha@gmail.com' },
         password: { type: 'string', example: 'Password12' }
       }
     }
@@ -33,7 +33,7 @@ export class AuthController {
 
   @Get('/profiles')
   @UseGuards(AuthGuard('jwt'))
-  @ApiBearerAuth()
+  @ApiBearerAuth('bearer')
   @ApiOperation({ summary: 'Get User Profile dari Token' })
   getProfile(@Req() req: any) {
     return this.authService.getProfile(req.user.id);

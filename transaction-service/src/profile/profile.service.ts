@@ -7,7 +7,7 @@ export class ProfileService {
 
   async getProfile(userId: number, authorization: string) {
     try {
-      const response = await axios.get(`${this.authUrl}/profiles`, {
+      const response = await axios.get(`${this.authUrl}/auth/profiles`, {
         headers: { Authorization: authorization },
       });
       return response.data;
